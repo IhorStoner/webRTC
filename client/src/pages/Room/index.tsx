@@ -14,7 +14,13 @@ const Room: React.FC = () => {
       <Grid columns={2}>
         {clients.map((clientID: string, i: number) => (
           <Grid.Column key={i}>
-            <video ref={(instance) => provideMediaRef(clientID, instance)} autoPlay playsInline src='' muted={clientID === LOCAL_VIDEO} />
+            <video
+              style={{ width: '100%', height: '100%' }}
+              ref={(instance) => provideMediaRef(clientID, instance)}
+              autoPlay
+              playsInline
+              muted={clientID === LOCAL_VIDEO}
+            />
           </Grid.Column>
         ))}
       </Grid>

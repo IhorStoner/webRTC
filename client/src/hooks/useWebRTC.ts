@@ -89,7 +89,6 @@ const useWebRTC = (roomID: string) => {
   };
 
   const setRemoteMedia = async ({ peerID, sessionDescription: remoteDescription }: { peerID: string; sessionDescription: any }) => {
-    console.log(peerConnection.current);
     await peerConnection.current[peerID].setRemoteDescription(new RTCSessionDescription(remoteDescription));
     if (remoteDescription.type === 'offer') {
       const answer = await peerConnection.current[peerID].createAnswer();
@@ -120,6 +119,13 @@ const useWebRTC = (roomID: string) => {
     socket.on(ACTIONS.SESSION_DESCRIPTION, setRemoteMedia);
     socket.on(ACTIONS.ICE_CANDIDATE, addIceCandidate);
     socket.on(ACTIONS.REMOVE_PEER, removePeer);
+
+    return () => {
+      socket.off(ACTIONS.ADD_PEER);
+      socket.off(ACTIONS.SESSION_DESCRIPTION);
+      socket.off(ACTIONS.ICE_CANDIDATE);
+      socket.off(ACTIONS.REMOVE_PEER);
+    };
   }, []);
 
   useEffect(() => {
