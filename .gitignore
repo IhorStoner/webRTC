@@ -1,0 +1,3 @@
+.prettierrc
+/.idea
+./server/node_modules
